@@ -13,5 +13,5 @@ app.use(express.json());
 readdirSync("./routes").map((r) => app.use(`/api/${r.split('.')[0]}`, require(`./routes/${r}`)));
 
 app.listen(process.env.PORT, () => {
-    console.log(`Cashflow API running on port ${process.env.PORT}`);
+    console.log(`Wazuh API running on port ${process.env.PORT}`);
 })
