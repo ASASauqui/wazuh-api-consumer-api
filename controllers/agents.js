@@ -86,8 +86,31 @@ const deleteAgents = async (req, res) => {
     }
 };
 
+const summarizeAgentsStatus = async (req, res) => {
+    try {
+        const authorization = req.headers.authorization;
+
+        if (!authorization) {
+            return res.status(400).json({ message: 'Token is required' });
+        }
+
+        const response = await axios.get(`${process.env.API_URL}/agents/summary/status`, {
+            headers: { 'Authorization': authorization },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+            })
+        });
+
+        return res.status(response.status).json(response.data);
+    }
+    catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     listAgents,
     addAgent,
-    deleteAgents
+    deleteAgents,
+    summarizeAgentsStatus
 };
